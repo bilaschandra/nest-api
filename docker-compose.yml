@@ -26,19 +26,6 @@ services:
       - "4000:3000"
     command: "npm run start:dev"
 
-  # db:
-  #   image: mysql:5.6
-  #   volumes:
-  #     - "db:/data/db"
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root
-  #     MYSQL_USER: root
-  #     MYSQL_PASSWORD: password
-  #     MYSQL_DATABASE: clock
-  #     TZ: Asia/Dhaka
-  #   ports:
-  #     - 3306:3306
-
   mysql-nest-api:
     image: bitnami/mysql:8.0.23
     ports:
