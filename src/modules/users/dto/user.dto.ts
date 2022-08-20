@@ -1,16 +1,16 @@
 import { IsString, IsNotEmpty } from 'class-validator';
-import { ApiModelProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UserDto {
-  @ApiModelProperty()	
+  @ApiProperty()	
   uid: string;
 
-  @ApiModelProperty()	
+  @ApiProperty()	
   key: string;
 
   @IsString()
   @IsNotEmpty()
-  @ApiModelProperty()
+  @ApiProperty()
   name: string;
 
   constructor(user: any) {

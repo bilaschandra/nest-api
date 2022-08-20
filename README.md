@@ -26,7 +26,9 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository. We can run the application by the docker/docker-compose. We dockerized the application. Here we have applied the MySQL 8.
+
+Play with NestJS 9.
 
 ## Installation
 
@@ -58,6 +60,48 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
+
+## NestJS 9 - Working with migrations using TypeORM
+When configuring TypeORM, we can set the synchronize property to true. This causes TypeORM to synchronize the database with our entities automatically. However, using it in production is highly discouraged because it might lead to unexpected data loss.
+
+Instead, TypeORM has a tool that helps us create and run migrations. Unfortunately, its migration documentation is outdated and does not match the latest version.
+
+We also need to add some entries to the scripts in our package.json.
+
+```
+"typeorm:cli": "ts-node ./node_modules/typeorm/cli",
+"migration:generate": "npm run typeorm:cli -- -d ./src/typeorm.config.ts migration:generate ./src/migrations/$npm_config_name",
+"migration:create": "npm run typeorm:cli -- migration:create ./src/migrations/$npm_config_name",
+"migration:run": "npm run typeorm:cli migration:run -- -d ./src/typeorm.config.ts"
+```
+
+### Create a new migration script
+```
+$ npm run migration:create --name=NameOfMigration
+```
+### Generate a new migration script
+```
+$ npm run migration:generate --name=NameOfMigration
+```
+### Run the migration script
+```
+$ npm run migration:run
+```
+
+Note: If you use the docker-compose then you can do same thing inside the container. Example
+```
+$ docker-compose exec nest-api sh
+
+You will go inside docker container. Now you can create the migration script there.
+
+$ npm run migration:create --name=NameOfMigration
+
+OR
+
+run you can directly create the migration script by the command
+
+$ docker-compose exec nest-api sh -c "npm run migration:create --name=NameOfMigration"
 ```
 
 ## Support

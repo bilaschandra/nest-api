@@ -1,4 +1,4 @@
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { AuthEntity } from './auth.entity';
 import {
   AUTH_REPOSITORY_TOKEN,
@@ -10,13 +10,12 @@ import { User } from '../../users/entities/user.entity';
 export const AuthProviders = [
   {
     provide: AUTH_REPOSITORY_TOKEN,
-    useFactory: (connection: Connection) =>
-      connection.getRepository(AuthEntity),
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(AuthEntity),
     inject: [DB_CONNECTION_TOKEN],
   },
   {
     provide: USER_REPOSITORY_TOKEN,
-    useFactory: (connection: Connection) => connection.getRepository(User),
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(User),
     inject: [DB_CONNECTION_TOKEN],
   },
 ];

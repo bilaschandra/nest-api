@@ -1,23 +1,31 @@
-import { createConnection } from 'typeorm';
 import { Provider } from '@nestjs/common';
-// import { ENV } from '@env/env';
+import { DataSource } from 'typeorm';
+import { databaseConfig, DEVELOPMENT, PRODUCTION, TEST, TYPEORM } from './database.config';
 
 export const databaseProviders: Provider[] = [
   {
-    provide: 'DbConnectionToken',
-    useFactory: async (env={}) => {
-      return createConnection({
-        type: 'mysql',
-        host: env.DB_HOST || 'db',
-        port: env.DB_PORT || '3306',
-        username: env.DB_USERNAME || 'root',
-        password: env.DB_PASSWORD || 'root',
-        database: env.DB_DATABASE || 'clock',
-        entities: [__dirname + '/../**/*.entity.{ts,js}'],
-        synchronize: true,
-        logging: 'all',
+    provide: TYPEORM,
+    useFactory: async () => {
+      let config;
+      switch (process.env.NODE_ENV) {
+      case DEVELOPMENT:
+         config = databaseConfig.development;
+         break;
+      case TEST:
+         config = databaseConfig.test;
+         break;
+      case PRODUCTION:
+         config = databaseConfig.production;
+         break;
+      default:
+         config = databaseConfig.development;
+      }
+
+      const dataSource = new DataSource({
+        ...config,
       });
+
+      return dataSource.initialize();
     },
-    // inject: [ENV],
   },
 ];
