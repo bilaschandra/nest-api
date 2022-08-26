@@ -1,5 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { TestingModule } from '@nestjs/testing/testing-module';
+import { random } from 'lodash';
 import { UserService } from '../services/users.service';
 import { UserController } from './user.controller';
 
@@ -36,6 +37,7 @@ describe('User Controller', () => {
       const params = {
         uid: 'uid',
         key: 'string',
+        name: `Test Name ${random()}`
       };
       controller.addUser(params);
       expect(spyService.addUser).toHaveBeenCalledWith(params);

@@ -1,0 +1,12 @@
+FROM node:16-alpine
+
+RUN mkdir /app
+WORKDIR /app
+ADD . /app
+
+EXPOSE 8080
+
+RUN rm -f .npmrc
+
+CMD [ "npm run start:prod" ]
+ENTRYPOINT [ "sh", "-c" ]
