@@ -10,7 +10,7 @@ const defaultConn = {
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
     port: +process.env.DB_PORT,
-    type: 'postgres',
+    type: 'mysql',
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
     migrationsTableName: 'migrations',
     migrations: [migrationsDir + '/*.ts'],
